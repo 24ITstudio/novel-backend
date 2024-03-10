@@ -1,5 +1,6 @@
 
 # novel library backend
+[![novel library](https://github.com/24ITstudio/novel-backend/actions/workflows/python-app.yml/badge.svg)](https://github.com/24ITstudio/novel-backend/actions/workflows/python-app.yml)
 
 ## project tree
 

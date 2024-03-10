@@ -3,6 +3,8 @@ from django.db import models
 
 class Novel(models.Model):
     name = models.CharField(max_length=70)  # in bytes
+    
+    # description
     desc = models.CharField(max_length=200) # in bytes
 
 

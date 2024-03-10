@@ -23,7 +23,7 @@ urlpatterns = [
     path("admin/", admin.site.urls),
 ]
 router = DefaultRouter()
-router.register('novels', NovelViewSet) # /novels as an entry
+router.register('novels', NovelViewSet)  # /novels as an entry
 
 urlpatterns.append(
     path('', include(router.urls)),

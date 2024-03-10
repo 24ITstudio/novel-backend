@@ -6,10 +6,11 @@ from rest_framework.test import APIRequestFactory
 from .views import NovelViewSet
 from .models import Novel
 
+
 class ApiTestCase(TestCase):
     def setUp(self):
         Novel.objects.create(name="a book", desc="desc")
-    
+
     def test_get_and_post(self):
         # current only test status code.
         factory = APIRequestFactory()

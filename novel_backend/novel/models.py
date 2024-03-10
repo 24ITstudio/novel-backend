@@ -1,3 +1,15 @@
+
 from django.db import models
 
-# Create your models here.
+class Novel(models.Model):
+    name = models.CharField(max_length=70)  # in bytes
+    desc = models.CharField(max_length=200) # in bytes
+
+
+class Chapter(models.Model):    
+    novel = models.ForeignKey("Chapter",
+              related_name="chapters", # used to be refered to in `Novel`
+              on_delete=models.CASCADE,
+            )
+    content = models.TextField() # var-length
+

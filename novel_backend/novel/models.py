@@ -9,7 +9,7 @@ class Novel(models.Model):
 
 
 class Chapter(models.Model):
-    novel = models.ForeignKey("Chapter",
+    novel = models.ForeignKey(Novel,
               related_name="chapters",  # used to be refered to in `Novel`
               on_delete=models.CASCADE,
             )

@@ -2,6 +2,9 @@
 # db is just a test locally
 /novel_backend/db.sqlite3
 
+# add for either PyCharm and Idea
+.idea/
+
 # Byte-compiled / optimized / DLL files
 __pycache__/
 *.py[cod]

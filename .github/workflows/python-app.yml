@@ -42,5 +42,6 @@ jobs:
     - name: Test with django test
       run: |
         cd $projd
+        python manage.py migrate
         python manage.py test
         cd -

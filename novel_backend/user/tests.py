@@ -3,22 +3,21 @@ from django.test import TestCase
 
 from rest_framework.test import APIRequestFactory
 from .views import NUserViewSet
-from .models import NUser, Novel
+from .models import NUser
 
+
+U1NAME = "user 1 name"
 
 class ApiTestCase(TestCase):
     def setUp(self):
-        nuser = NUser.objects.create()
-        nuser.save()  # must save before `add`
-        Novel.objects.create(name="non-favor", desc="Desc", max_chapter=3)
-        fav = Novel.objects.create(name="first favor", desc="Desc", max_chapter=3)
-        nuser.favors.add(fav)
+        NUser.objects.create(username=U1NAME)
 
-    def test_get_and_post(self):
-        # TODO: more tests 
-        # current only test status code.
+    def test_user(self):
+        # test status code and data
         factory = APIRequestFactory()
         request = factory.get('/user/')
         response = NUserViewSet.as_view({'get': 'list'})(request)
         self.assertEqual(response.status_code, 200)
-        
+
+        self.assertEqual(response.data[0]['username'], U1NAME)
+

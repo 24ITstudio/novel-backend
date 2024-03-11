@@ -2,12 +2,15 @@
 from django.db import models
 
 
+# 0 to at least 32767
+_ChapterOrderType = models.PositiveSmallIntegerField
+
 class Novel(models.Model):
     name = models.CharField(max_length=64)   # in bytes
     # description:
     desc = models.CharField(max_length=256)  # in bytes
     # the last chapter's order
-    max_chapter = models.PositiveSmallIntegerField()
+    max_chapter = _ChapterOrderType()
 
 
 class Chapter(models.Model):
@@ -15,4 +18,5 @@ class Chapter(models.Model):
               related_name="chapters",  # used to be refered to in `Novel`
               on_delete=models.CASCADE,
             )
+    chapter_ord = _ChapterOrderType()
     content = models.TextField()  # var-length

@@ -3,9 +3,11 @@ from django.db import models
 
 
 class Novel(models.Model):
-    name = models.CharField(max_length=70)   # in bytes
+    name = models.CharField(max_length=64)   # in bytes
     # description:
-    desc = models.CharField(max_length=200)  # in bytes
+    desc = models.CharField(max_length=256)  # in bytes
+    # the last chapter's order
+    max_chapter = models.PositiveSmallIntegerField()
 
 
 class Chapter(models.Model):

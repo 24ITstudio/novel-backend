@@ -14,10 +14,10 @@ class ApiTestCase(TestCase):
     def test_get_and_post(self):
         # current only test status code.
         factory = APIRequestFactory()
-        request = factory.get('/novels/')
+        request = factory.get('/novel/')
         response = NovelViewSet.as_view({'get': 'list'})(request)
         self.assertEqual(response.status_code, 200)
         # handle POST
-        request = factory.post('/novels/', {'name': 'Another book', 'desc': 'Desc'})
+        request = factory.post('/novel/', {'name': 'Another book', 'desc': 'Desc'})
         response = NovelViewSet.as_view({'post': 'create'})(request)
         self.assertEqual(response.status_code, 201)

@@ -4,6 +4,7 @@ from django.shortcuts import get_object_or_404
 from django.db.models import Count, F
 from rest_framework import viewsets
 from rest_framework.response import Response
+from rest_framework.filters import SearchFilter
 
 from .models import Novel
 from .serializers import NovelSerializer
@@ -14,6 +15,10 @@ class _RONovelViewSet(viewsets.ReadOnlyModelViewSet):
 
 
 class NovelViewSet(_RONovelViewSet, viewsets.ModelViewSet):
+    filter_backends = [SearchFilter]
+    search_fields = ['name']
+    # support search via `?search=`
+    # ref https://www.django-rest-framework.org/api-guide/filtering/#searchfilter
     def retrieve(self, request, *args, **kwargs):
         arg: str = kwargs['pk']
         idx = arg.find('-')

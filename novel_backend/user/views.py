@@ -11,6 +11,7 @@ class IsOwnerOrReadOnly(permissions.BasePermission):
         # always allow GET, HEAD, OPTIONS
         if request.method in permissions.SAFE_METHODS:
             return True
+        # It's ensured that username is unique
         return obj.username == request.user.username
 
 
@@ -20,6 +21,7 @@ class NUserViewSet(viewsets.ModelViewSet):
     permission_classes = (IsOwnerOrReadOnly,)
 
     def create(self, validated_data):
+        # This makes sure password is encrypted
         return NUser.objects.create_user(**validated_data)
 
 

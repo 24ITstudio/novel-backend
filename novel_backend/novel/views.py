@@ -13,9 +13,13 @@ class _RONovelViewSet(viewsets.ReadOnlyModelViewSet):
     queryset = Novel.objects.all()
     serializer_class = NovelSerializer
 
-
+class _Filter(SearchFilter):
+    def get_search_fields(self, view, request):
+        if request.query_params.get('tag') is not None:
+            return ['tag']  # ?tag&search=...
+        return super().get_search_fields(view, request)
 class NovelViewSet(_RONovelViewSet, viewsets.ModelViewSet):
-    filter_backends = [SearchFilter]
+    filter_backends = [_Filter]
     search_fields = ['name']
     # support search via `?search=`
     # ref https://www.django-rest-framework.org/api-guide/filtering/#searchfilter

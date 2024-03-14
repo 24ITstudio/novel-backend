@@ -25,7 +25,7 @@ urlpatterns = [
 ]
 
 urlpatterns.append(
-    path('token-auth', views.obtain_auth_token)
+    path('token-auth/', views.obtain_auth_token)
 )
 # ref https://blog.csdn.net/qq_39980136/article/details/89503850
 #     https://www.django-rest-framework.org/api-guide/authentication/#tokenauthentication

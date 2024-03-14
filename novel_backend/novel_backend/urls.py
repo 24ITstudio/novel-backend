@@ -18,7 +18,7 @@ from django.urls import path, include
 from rest_framework.routers import DefaultRouter
 from rest_framework.authtoken import views
 from novel.views import NovelViewSet, HotNovelViewSet
-from user.views import NUserViewSet
+from user.views import NUserViewSet, CreateNUserSet
 
 urlpatterns = [
     path("admin/", admin.site.urls),
@@ -34,6 +34,7 @@ router = DefaultRouter()
 router.register('novel', NovelViewSet)  # /novels as an entry
 router.register('hotnovel', HotNovelViewSet)
 router.register('user', NUserViewSet)
+router.register('register', CreateNUserSet)
 urlpatterns.append(
     path('', include(router.urls)),
 )

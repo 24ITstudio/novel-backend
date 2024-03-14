@@ -17,6 +17,9 @@ class NUserViewSet(viewsets.ModelViewSet):
     serializer_class = NUserSerializer
     permission_classes = IsOwnerOrReadOnly,#(permissions.IsAuthenticatedOrReadOnly,)
 
+    def create(self, validated_data):
+        return NUser.objects.create_user(**validated_data)
+
 class CreateNUserSet(CreateModelMixin, viewsets.GenericViewSet):
     queryset = NUser.objects.all()
     serializer_class = NUserSerializer

@@ -15,7 +15,7 @@ class IsOwnerOrReadOnly(permissions.BasePermission):
 class NUserViewSet(viewsets.ModelViewSet):
     queryset = NUser.objects.all()
     serializer_class = NUserSerializer
-    permission_classes = IsOwnerOrReadOnly,#(permissions.IsAuthenticatedOrReadOnly,)
+    permission_classes = (IsOwnerOrReadOnly,)
 
     def create(self, validated_data):
         return NUser.objects.create_user(**validated_data)

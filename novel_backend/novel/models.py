@@ -17,7 +17,7 @@ class Novel(models.Model):
 
 class Chapter(models.Model):
     novel = models.ForeignKey(Novel,
-              related_name="chapters",  # used to be refered to in `Novel`
+              related_name="chapters",  # used to be referred to in `Novel`
               on_delete=models.CASCADE,
             )
     chapter_ord = _ChapterOrderType()

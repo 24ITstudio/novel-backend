@@ -31,7 +31,7 @@ urlpatterns.append(
 #     https://www.django-rest-framework.org/api-guide/authentication/#tokenauthentication
 
 router = DefaultRouter()
-router.register('novel', NovelViewSet)  # /novels as an entry
+router.register('novel', NovelViewSet)
 router.register('hotnovel', HotNovelViewSet)
 router.register('user', NUserViewSet)
 router.register('register', CreateNUserSet)

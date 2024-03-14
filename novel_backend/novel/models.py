@@ -12,6 +12,8 @@ class Novel(models.Model):
     # the last chapter's order
     max_chapter = _ChapterOrderType()
 
+    tag = models.CharField(max_length=16, default="")
+
 
 class Chapter(models.Model):
     novel = models.ForeignKey(Novel,

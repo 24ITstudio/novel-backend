@@ -4,5 +4,5 @@ from novel.models import Novel
 
 
 class NUser(User):
-    favors = models.ManyToManyField(Novel, blank=True)
+    favors = models.ManyToManyField(Novel)
     # ref https://docs.djangoproject.com/zh-hans/4.2/topics/db/examples/many_to_many/

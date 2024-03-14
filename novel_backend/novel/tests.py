@@ -7,10 +7,11 @@ from django.test import TestCase
 from rest_framework.test import APIRequestFactory
 from .views import NovelViewSet, HotNovelViewSet
 from .models import Novel, Chapter
-from user.models import NUser, Novel
+from user.models import NUser
 
 from urllib.parse import quote
-quote_url = lambda s: quote(s, safe='')
+from functools import partial
+quote_url = partial(quote, safe='')
 
 F_NAME = "the first one"
 F_F_CONTENT = "Content"
@@ -20,25 +21,28 @@ INVALID_URL_NAME = "non fav"  # name that is invalid URL
 UNI_KEY = "!Unique Key!"
 N_WITH_UNI_KEY = 10
 
+
 class ApiTestCase(TestCase):
     def setUp_search(self):
         'generate random novels that can be searched by `UNI_KEY`'
-        create = lambda name:\
+        def create(name):
             Novel.objects.create(name=name, desc="Desc", max_chapter=3)
         key = UNI_KEY
         N = N_WITH_UNI_KEY
         pls = list(range(N))
         ch = '_'
         shuffle(pls)
+        
         def mk(n):
-            name = ch * n + key + ch * (N-n)
+            name = ch * n + key + ch * (N - n)
             create(name)
-        for i in pls: mk(i)
+        for i in pls:
+            mk(i)
 
     def setUp(self):
         # XXX: `test_novel_get_and_post` assume `F_NAME` is the first book
         n1 = Novel.objects.create(name=F_NAME, desc="desc", max_chapter=1)
-        c1 = Chapter.objects.create(novel=n1,  chapter_ord=1, content=F_F_CONTENT)
+        Chapter.objects.create(novel=n1, chapter_ord=1, content=F_F_CONTENT)
 
         nuser = NUser.objects.create()
         nuser.save()  # must save before `add`
@@ -58,14 +62,15 @@ class ApiTestCase(TestCase):
             self.assertEqual(response.status_code, 200)
             return response.data
         t_get('/novel/')
-        n1 = t_get('/novel/1',  "1",  'retrieve')
+        n1 = t_get('/novel/1', "1", 'retrieve')
         self.assertEqual(n1['name'], F_NAME)
-        c1 = t_get('/novel/1-1',"1-1",'retrieve')
+        c1 = t_get('/novel/1-1', "1-1", 'retrieve')
         self.assertEqual(c1['content'], F_F_CONTENT)
         # handle POST
         request = factory.post('/novel/', {'name': 'Another book', 'desc': 'Desc', 'max_chapter': 3})
         response = NovelViewSet.as_view({'post': 'create'})(request)
         self.assertEqual(response.status_code, 201)
+
     def test_hotnovel(self):
         factory = APIRequestFactory()
         request = factory.get('/hotnovel/')
@@ -79,7 +84,7 @@ class ApiTestCase(TestCase):
 
         def search(key):
             safe_key = quote_url(key)
-            request = factory.get('/novel?search='+safe_key)
+            request = factory.get('/novel?search=' + safe_key)
             response = NovelViewSet.as_view({'get': 'list'})(request)
             self.assertEqual(response.status_code, 200)
             return response.data

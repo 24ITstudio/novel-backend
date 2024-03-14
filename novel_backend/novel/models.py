@@ -5,6 +5,7 @@ from django.db import models
 # 0 to at least 32767
 _ChapterOrderType = models.PositiveSmallIntegerField
 
+
 class Novel(models.Model):
     name = models.CharField(max_length=64)   # in bytes
     # description:

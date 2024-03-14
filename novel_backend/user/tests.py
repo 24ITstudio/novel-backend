@@ -8,6 +8,7 @@ from .models import NUser
 
 U1NAME = "user 1 name"
 
+
 class ApiTestCase(TestCase):
     def setUp(self):
         NUser.objects.create(username=U1NAME)
@@ -20,4 +21,3 @@ class ApiTestCase(TestCase):
         self.assertEqual(response.status_code, 200)
 
         self.assertEqual(response.data[0]['username'], U1NAME)
-

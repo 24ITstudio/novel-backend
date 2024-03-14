@@ -8,5 +8,6 @@ class NUserSerializer(serializers.ModelSerializer):
         model = NUser
         fields = "__all__"
         extra_kwargs = dict(
+            password = dict(write_only=True),
             favors = dict(allow_empty=True),
         )

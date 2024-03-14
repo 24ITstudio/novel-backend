@@ -16,12 +16,20 @@ Including another URLconf
 from django.contrib import admin
 from django.urls import path, include
 from rest_framework.routers import DefaultRouter
+from rest_framework.authtoken import views
 from novel.views import NovelViewSet, HotNovelViewSet
 from user.views import NUserViewSet
 
 urlpatterns = [
     path("admin/", admin.site.urls),
 ]
+
+urlpatterns.append(
+    path('token-auth', views.obtain_auth_token)
+)
+# ref https://blog.csdn.net/qq_39980136/article/details/89503850
+#     https://www.django-rest-framework.org/api-guide/authentication/#tokenauthentication
+
 router = DefaultRouter()
 router.register('novel', NovelViewSet)  # /novels as an entry
 router.register('hotnovel', HotNovelViewSet)

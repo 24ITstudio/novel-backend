@@ -8,6 +8,7 @@ class NovelSerializer(serializers.ModelSerializer):
         model = Novel
         fields = "__all__"
 
+
 class ChapterSerializer(serializers.ModelSerializer):
     class Meta:
         model = Chapter

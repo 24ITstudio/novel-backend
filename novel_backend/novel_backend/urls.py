@@ -17,7 +17,7 @@ from django.contrib import admin
 from django.urls import path, include
 from rest_framework.routers import DefaultRouter
 from rest_framework.authtoken import views
-from novel.views import NovelViewSet, HotNovelViewSet,ChaptersViewSet
+from novel.views import NovelViewSet, HotNovelViewSet, ChaptersViewSet
 from user.views import NUserViewSet, CreateNUserSet
 
 urlpatterns = [

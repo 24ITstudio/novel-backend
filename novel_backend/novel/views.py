@@ -63,14 +63,14 @@ class HotNovelViewSet(_RONovelViewSet):
 
 
 class ChaptersViewSet(viewsets.ModelViewSet):
-    queryset = Chapter.object.all()
+    queryset = Chapter.objects.all()
     serializer_class = ChapterSerializer
 
     def addchapters(self,request):
         related_name = request.POST.get('related_name')
         chapter_ord=request.POST.get('chapter_ord')
         content=request.POST.get('content')
-        chapters=Chapter.object.create(related_name=related_name,
+        chapters=Chapter.objects.create(related_name=related_name,
                                        chapter_ord=chapter_ord,content=content)
         chapters.save()
         return Response(data={"detail": "success"})

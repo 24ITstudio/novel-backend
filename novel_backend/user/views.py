@@ -28,3 +28,5 @@ class NUserViewSet(viewsets.ModelViewSet):
 class CreateNUserSet(CreateModelMixin, viewsets.GenericViewSet):
     queryset = NUser.objects.all()
     serializer_class = NUserSerializer
+
+

@@ -6,8 +6,8 @@ from rest_framework import viewsets
 from rest_framework.response import Response
 from rest_framework.filters import SearchFilter
 
-from .models import Novel
-from .serializers import NovelSerializer
+from .models import Novel,Chapter
+from .serializers import NovelSerializer,ChapterSerializer
 
 
 class _RONovelViewSet(viewsets.ReadOnlyModelViewSet):
@@ -45,6 +45,9 @@ class NovelViewSet(_RONovelViewSet, viewsets.ModelViewSet):
         return Response(data=dict(content=content))
 
 
+
+
+
 MostHotNovel = 10
 
 
@@ -57,3 +60,8 @@ class HotNovelViewSet(_RONovelViewSet):
     #     https://docs.djangoproject.com/en/5.0/ref/models/querysets/#order-by
     #     https://docs.djangoproject.com/en/5.0/ref/models/querysets/#alias
     #     https://docs.djangoproject.com/en/5.0/topics/db/queries/#limiting-querysets
+
+
+class ChaptersViewSet(viewsets.ModelViewSet):
+    queryset = Chapter.object.all()
+    serializer_class = ChapterSerializer

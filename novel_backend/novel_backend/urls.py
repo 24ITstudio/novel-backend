@@ -32,7 +32,7 @@ urlpatterns.append(
 
 router = DefaultRouter()
 router.register('novel', NovelViewSet)
-router.register('hot', HotNovelViewSet)
+router.register('hotnovel', HotNovelViewSet,basename='hotnovel')
 router.register('user', NUserViewSet)
 router.register('register', CreateNUserSet)
 router.register('addchapters', ChaptersViewSet)

@@ -32,7 +32,8 @@ class CreateNUserSet(CreateModelMixin, viewsets.GenericViewSet):
     serializer_class = NUserSerializer
 
 
- class FavorNUserSet(viewsets.ModelViewSet):
+
+class FavorNUserSet(viewsets.ModelViewSet):
     queryset = NUser.objects.all()
     serializer_class = NUserSerializer
     permission_classes = (IsOwnerOrReadOnly,)
@@ -60,6 +61,8 @@ class CreateNUserSet(CreateModelMixin, viewsets.GenericViewSet):
             nuser.favors.remove(novel)
             nuser.save()
             return Response(status=self.HTTP_204_NOT_CONNECTED)
+
+
 
 
 

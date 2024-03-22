@@ -5,6 +5,10 @@ from django.db.models import Count, F
 from rest_framework import viewsets
 from rest_framework.response import Response
 from rest_framework.filters import SearchFilter
+
+from user.views import IsOwnerOrReadOnly
+
+
 from .models import Novel,Chapter
 from .serializers import NovelSerializer,ChapterSerializer
 
@@ -44,6 +48,9 @@ class NovelViewSet(_RONovelViewSet, viewsets.ModelViewSet):
         return Response(data=dict(content=content))
 
 
+
+
+
 MostHotNovel = 10
 
 
@@ -56,3 +63,9 @@ class HotNovelViewSet(_RONovelViewSet):
     #     https://docs.djangoproject.com/en/5.0/ref/models/querysets/#order-by
     #     https://docs.djangoproject.com/en/5.0/ref/models/querysets/#alias
     #     https://docs.djangoproject.com/en/5.0/topics/db/queries/#limiting-querysets
+
+
+class ChaptersViewSet(viewsets.ModelViewSet):
+    queryset = Chapter.objects.all()
+    serializer_class = ChapterSerializer
+    permission_classes = (IsOwnerOrReadOnly,)

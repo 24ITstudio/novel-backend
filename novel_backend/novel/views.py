@@ -64,6 +64,6 @@ class HotNovelViewSet(_RONovelViewSet):
 
 
 class ChaptersViewSet(viewsets.ModelViewSet):
-    queryset = Chapter.object.all()
+    queryset = Chapter.objects.all()
     serializer_class = ChapterSerializer
     permission_classes = (IsOwnerOrReadOnly,)

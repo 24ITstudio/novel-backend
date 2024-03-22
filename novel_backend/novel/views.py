@@ -5,9 +5,8 @@ from django.db.models import Count, F
 from rest_framework import viewsets
 from rest_framework.response import Response
 from rest_framework.filters import SearchFilter
-
-from .models import Novel
-from .serializers import NovelSerializer
+from .models import Novel,Chapter
+from .serializers import NovelSerializer,ChapterSerializer
 
 
 class _RONovelViewSet(viewsets.ReadOnlyModelViewSet):

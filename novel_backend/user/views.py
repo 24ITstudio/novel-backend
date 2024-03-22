@@ -14,7 +14,7 @@ class IsOwnerOrReadOnly(permissions.BasePermission):
         if request.method in permissions.SAFE_METHODS:
             return True
         # It's ensured that username is unique
-        return obj.id == request.user.id
+        return obj.username == request.user.username
 
 
 class NUserViewSet(viewsets.ModelViewSet):

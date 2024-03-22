@@ -39,10 +39,10 @@ router.register('novel', NovelViewSet)
 router.register('hotnovel', HotNovelViewSet,basename='hotnovel')
 router.register('user', NUserViewSet)
 router.register('register', CreateNUserSet,basename='register')
-router.register('chapters', ChaptersViewSet)
+router.register('chapter', ChaptersViewSet)
 
 
-router.register('favorset', FavorNUserSet)
+router.register('favor', FavorNUserSet, basename='favor')
 
 
 urlpatterns.append(

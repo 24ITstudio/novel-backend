@@ -5,6 +5,7 @@ from django.db.models import Count, F
 from rest_framework import viewsets
 from rest_framework.response import Response
 from rest_framework.filters import SearchFilter
+from user.views import IsOwnerOrReadOnly
 
 from .models import Novel,Chapter
 from .serializers import NovelSerializer,ChapterSerializer
@@ -65,12 +66,4 @@ class HotNovelViewSet(_RONovelViewSet):
 class ChaptersViewSet(viewsets.ModelViewSet):
     queryset = Chapter.object.all()
     serializer_class = ChapterSerializer
-
-    def addchapters(self,request):
-        related_name = request.POST.get('related_name')
-        chapter_ord=request.POST.get('chapter_ord')
-        content=request.POST.get('content')
-        chapters=Chapter.object.create(related_name=related_name,
-                                       chapter_ord=chapter_ord,content=content)
-        chapters.save()
-        return Response(data={"detail": "success"})
+    permission_classes = (IsOwnerOrReadOnly,)

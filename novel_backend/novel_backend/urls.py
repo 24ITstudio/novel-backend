@@ -35,7 +35,7 @@ router.register('novel', NovelViewSet)
 router.register('hotnovel', HotNovelViewSet)
 router.register('user', NUserViewSet)
 router.register('register', CreateNUserSet)
-router.register('addchapters', ChaptersViewSet)
+router.register('chapters', ChaptersViewSet)
 urlpatterns.append(
     path('', include(router.urls)),
 )

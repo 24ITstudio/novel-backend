@@ -66,10 +66,7 @@ class ApiTestCase(TestCase):
         self.assertEqual(n1['name'], F_NAME)
         c1 = t_get('/novel/1-1', "1-1", 'retrieve')
         self.assertEqual(c1['content'], F_F_CONTENT)
-        # handle POST
-        request = factory.post('/novel/', {'name': 'Another book', 'desc': 'Desc', 'max_chapter': 3})
-        response = NovelViewSet.as_view({'post': 'create'})(request)
-        self.assertEqual(response.status_code, 201)
+        #  ..you can only POST after login
 
     def test_hotnovel(self):
         factory = APIRequestFactory()

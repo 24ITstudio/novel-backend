@@ -2,11 +2,9 @@
 
 from django.shortcuts import get_object_or_404
 from django.db.models import Count, F
-from rest_framework import viewsets
+from rest_framework import viewsets, permissions
 from rest_framework.response import Response
 from rest_framework.filters import SearchFilter
-
-from user.views import IsOwnerOrReadOnly
 
 
 from .models import Novel,Chapter
@@ -25,7 +23,10 @@ class _Filter(SearchFilter):
         return super().get_search_fields(view, request)
 
 
-class NovelViewSet(_RONovelViewSet, viewsets.ModelViewSet):
+class NovelViewSet(viewsets.ModelViewSet):
+    queryset = Novel.objects.all()
+    serializer_class = NovelSerializer
+    permission_classes = (permissions.IsAuthenticatedOrReadOnly,)
     filter_backends = [_Filter]
     search_fields = ['name']
     # support search via `?search=`
@@ -68,4 +69,4 @@ class HotNovelViewSet(_RONovelViewSet):
 class ChaptersViewSet(viewsets.ModelViewSet):
     queryset = Chapter.objects.all()
     serializer_class = ChapterSerializer
-    permission_classes = (IsOwnerOrReadOnly,)
+    permission_classes = (permissions.IsAuthenticated,)

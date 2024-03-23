@@ -13,8 +13,7 @@ class IsOwnerOrReadOnly(permissions.BasePermission):
         # always allow GET, HEAD, OPTIONS
         if request.method in permissions.SAFE_METHODS:
             return True
-        # It's ensured that username is unique
-        return obj.username == request.user.username
+        return obj.id == request.user.id
 
 
 class NUserViewSet(viewsets.ModelViewSet):

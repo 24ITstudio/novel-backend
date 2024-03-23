@@ -1,12 +1,15 @@
 
 
-from rest_framework import viewsets, permissions,status
+from rest_framework import viewsets, permissions, status, generics
 from rest_framework.mixins import CreateModelMixin
 from .models import NUser
 from .serializers import NUserSerializer
 from novel.models import Novel
 from rest_framework.response import Response
 
+class IsOwner(permissions.BasePermission):
+    def has_object_permission(self, request, view, obj):
+        return obj.id == request.user.id
 
 class IsOwnerOrReadOnly(permissions.BasePermission):
     def has_object_permission(self, request, view, obj):
@@ -29,34 +32,36 @@ class CreateNUserSet(CreateModelMixin, viewsets.GenericViewSet):
 
 
 
-class FavorNUserSet(viewsets.ModelViewSet):
-    queryset = NUser.objects.all()
-    serializer_class = NUserSerializer
-    permission_classes = (IsOwnerOrReadOnly,)
+class FavorNUserSet(generics.CreateAPIView, generics.DestroyAPIView):#CreateModelMixin, DestroyModelMixin, viewsets.GenericViewSet):
+    permission_classes = (IsOwner,)
 
-    def create(self,request):   #add user's favors novel
-        data = request.data
+    def create(self, request, pk=None):
+        "add user's favors novel, `pk` is novel id"
+        if pk is None:
+            return Response(dict(detail="arg missed"), status=status.HTTP_400_BAD_REQUEST)
         id = request.user.id
         if id is None:
             return Response(dict(detail="you don't have permission"), status=status.HTTP_400_BAD_REQUEST)
         else:
-            serializer = self.get_serializer(request.data)
-            nuser = NUser.objects.filter(id=id).first()
-            # novel = Novel.self.filter(id=data.id)
-            nuser.favors.add(data)
+            novel = Novel.objects.filter(id=pk).first()
+            if novel is None:
+                return Response(dict(detail="novel with given id not found"), status=status.HTTP_404_NOT_FOUND)
+
+            nuser = NUser.objects.get(id=id)
+            nuser.favors.add(novel)
             nuser.save()
-            return Response(serializer.data, status=status.HTTP_201_CREATED)
+            return Response(data=dict(), status=status.HTTP_201_CREATED)
 
     def destroy(self, request, pk):   #remove user's favors novel
         iduser = request.user.id
-        novel = request.data
-        nuser = NUser.objects.filter(id=iduser).first()
-        if nuser is None:
+        if iduser is None:
             return Response(dict(detail="you don't have permission"), status=status.HTTP_400_BAD_REQUEST)
         else:
+            nuser = NUser.objects.get(id=iduser)
+            novel = Novel.objects.filter(id=pk).first()
             nuser.favors.remove(novel)
             nuser.save()
-            return Response(status=self.HTTP_204_NOT_CONNECTED)
+            return Response(data=dict(), status=status.HTTP_204_NO_CONTENT)
 
 
 

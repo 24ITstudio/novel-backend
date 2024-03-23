@@ -41,10 +41,10 @@ router.register('user', NUserViewSet)
 router.register('register', CreateNUserSet,basename='register')
 router.register('chapter', ChaptersViewSet)
 
-
-router.register('favor', FavorNUserSet, basename='favor')
-
-
 urlpatterns.append(
     path('', include(router.urls)),
+)
+
+urlpatterns.append(
+  path('favor/<pk>/', FavorNUserSet.as_view())
 )

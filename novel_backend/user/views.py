@@ -22,9 +22,6 @@ class NUserViewSet(viewsets.ModelViewSet):
     serializer_class = NUserSerializer
     permission_classes = (IsOwnerOrReadOnly,)
 
-    def create(self, validated_data):
-        # This makes sure password is encrypted
-        return NUser.objects.create_user(**validated_data)
 
 
 class CreateNUserSet(CreateModelMixin, viewsets.GenericViewSet):

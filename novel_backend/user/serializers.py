@@ -10,5 +10,5 @@ class NUserSerializer(serializers.ModelSerializer):
         extra_kwargs = dict(
             # make password not transmitted and shown when getting info
             password=dict(write_only=True),
-            favors=dict(allow_empty=True),
+            favors=dict(allow_empty=True, required=False),
         )

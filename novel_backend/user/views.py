@@ -38,21 +38,20 @@ class CreateNUserSet(CreateModelMixin, viewsets.GenericViewSet):
     permission_classes = (IsOwnerOrReadOnly,)
 
     def create(self,request):   #add user's favors novel
-        data = request.data
+        data = Novel.id
         id = request.user.id
         if id is None:
             return Response(dict(detail="you don't have permission"), status=status.HTTP_400_BAD_REQUEST)
         else:
             serializer = self.get_serializer(request.data)
             nuser = NUser.objects.filter(id=id).first()
-            # novel = Novel.self.filter(id=data.id)
             nuser.favors.add(data)
             nuser.save()
             return Response(serializer.data, status=status.HTTP_201_CREATED)
 
     def destroy(self, request, pk):   #remove user's favors novel
         iduser = request.user.id
-        novel = request.data
+        novel = Novel.id
         nuser = NUser.objects.filter(id=iduser).first()
         if nuser is None:
             return Response(dict(detail="you don't have permission"), status=status.HTTP_400_BAD_REQUEST)

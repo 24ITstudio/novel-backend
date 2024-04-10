@@ -2,10 +2,21 @@
 
 from rest_framework import viewsets, permissions, status, generics
 from rest_framework.mixins import CreateModelMixin
+from rest_framework.response import Response
+from rest_framework.decorators import api_view
 from .models import NUser
 from .serializers import NUserSerializer
 from novel.models import Novel
-from rest_framework.response import Response
+
+@api_view(['GET'])
+def username(request, username):
+    # username has been `url-decoded`
+    user = NUser.objects.filter(username=username).first()
+    if user is None:
+        return Response(status=status.HTTP_404_NOT_FOUND,
+                        data=dict(details="Not found."))
+    return Response(data=dict(id=user.id))
+
 
 class IsOwner(permissions.BasePermission):
     def has_object_permission(self, request, view, obj):

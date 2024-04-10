@@ -19,7 +19,7 @@ from rest_framework.routers import DefaultRouter
 from rest_framework.authtoken import views
 from novel.views import NovelViewSet, HotNovelViewSet,ChaptersViewSet
 
-from user.views import NUserViewSet, CreateNUserSet, FavorNUserSet
+from user.views import NUserViewSet, CreateNUserSet, FavorNUserSet, username
 
 
 
@@ -46,5 +46,9 @@ urlpatterns.append(
 )
 
 urlpatterns.append(
-  path('favor/<pk>/', FavorNUserSet.as_view())
+  path('favor/<int:pk>/', FavorNUserSet.as_view())
+)
+
+urlpatterns.append(
+  path('user-id/<str:username>/', username)
 )

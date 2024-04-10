@@ -4,7 +4,10 @@
 
 
 ## What's this
-A backend that provides API for novel reading.
+A backend that provides API for self-hosting novel reading.
+
+- self-hosting: novels is stored in server's database.
+- user-system: support registration, login and so on.
 
 ## Doc
 see [novel-doc](https://github.com/24ITstudio/novel-doc)

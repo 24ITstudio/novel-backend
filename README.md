@@ -6,7 +6,7 @@
 ## What's this
 A backend that provides API for self-hosting novel reading.
 
-- self-hosting: novels is stored in server's database.
+- self-hosting: novels are stored in server's database.
 - user-system: support registration, login and so on.
 
 ## Doc

@@ -15,7 +15,7 @@ Including another URLconf
 """
 from django.contrib import admin
 from django.urls import path, include
-from rest_framework.routers import DefaultRouter
+from rest_framework.routers import SimpleRouter as Router
 from rest_framework.authtoken import views
 from novel.views import (
     NovelViewSet, HotNovelViewSet, ChaptersViewSet, TagViewSet
@@ -36,7 +36,7 @@ urlpatterns.append(
 # ref https://blog.csdn.net/qq_39980136/article/details/89503850
 #     https://www.django-rest-framework.org/api-guide/authentication/#tokenauthentication
 
-router = DefaultRouter()
+router = Router()
 router.register('novel', NovelViewSet)
 router.register('novel-tag', TagViewSet, basename='novel-tag')
 router.register('hotnovel', HotNovelViewSet, basename='hotnovel')

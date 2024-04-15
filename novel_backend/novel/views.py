@@ -32,6 +32,9 @@ class NovelViewSet(viewsets.ModelViewSet):
     # support search via `?search=`
     # ref https://www.django-rest-framework.org/api-guide/filtering/#searchfilter
     
+    def list(self, request):
+        queryset = Novel.objects.values_list('tag', flat=True).distinct()
+        return Response(data=queryset)
     def retrieve(self, request, *args, **kwargs):
         arg: str = kwargs['pk']
         idx = arg.find('-')

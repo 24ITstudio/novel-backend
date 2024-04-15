@@ -16,25 +16,24 @@ class _RONovelViewSet(viewsets.ReadOnlyModelViewSet):
     serializer_class = NovelSerializer
 
 
+# TODO: remove this, it's deprcated. use `/novel-tag` router instead.
 class _Filter(SearchFilter):
     def get_search_fields(self, view, request):
         if request.query_params.get('tag') is not None:
-            return ['tag']  # ?tag&search=...
-        return super().get_search_fields(view, request)
+            return ['tag']  
+            # if `?tag&search=`, then search on tag
+        return super().get_search_fields(view, request)  # seach on name
 
 
 class NovelViewSet(viewsets.ModelViewSet):
     queryset = Novel.objects.all()
     serializer_class = NovelSerializer
     permission_classes = (permissions.IsAuthenticatedOrReadOnly,)
-    filter_backends = [_Filter]
+    filter_backends = [_Filter]  # TODO: use `[SearchFilter]` instead, see `_Filter`
     search_fields = ['name']
     # support search via `?search=`
     # ref https://www.django-rest-framework.org/api-guide/filtering/#searchfilter
     
-    def list(self, request):
-        queryset = Novel.objects.values_list('tag', flat=True).distinct()
-        return Response(data=queryset)
     def retrieve(self, request, *args, **kwargs):
         arg: str = kwargs['pk']
         idx = arg.find('-')
@@ -52,7 +51,16 @@ class NovelViewSet(viewsets.ModelViewSet):
         return Response(data=dict(content=content))
 
 
-
+class TagViewSet(_RONovelViewSet):
+    _target_fields = 'tag'
+    filter_backends = [SearchFilter]
+    search_fields = [_target_fields]
+    def list(self, request):
+        if not request.query_params:  # if no `?search=` is given.
+            # returns an array of tag
+            queryset = Novel.objects.values_list(self._target_fields, flat=True).distinct()
+            return Response(data=queryset)
+        return super().list(request)
 
 
 MostHotNovel = 10
